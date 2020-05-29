@@ -30,13 +30,13 @@ public class NettyTestServer {
                 }).option(ChannelOption.SO_BACKLOG, 128)
                 .childOption(ChannelOption.SO_KEEPALIVE,true);
         try{
-            ChannelFuture future = bootstrap.bind(8081).sync();
+            ChannelFuture future = bootstrap.bind(8085).sync();
             System.out.println("服务器启动了");
             channel = future.channel();
             future.channel().closeFuture().sync();
 
         }catch (Exception e){
-
+            
         }
         finally {
             workerGroup.shutdownGracefully();

@@ -10,6 +10,9 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TestHandler extends ChannelInboundHandlerAdapter {
     private final String wsUrl = "/ws";
     private final String connectReq = "connect";
@@ -30,6 +33,7 @@ public class TestHandler extends ChannelInboundHandlerAdapter {
         if(fullHttpRequest instanceof HttpRequest){
             System.out.println("请求体"+fullHttpRequest.toString());
             HttpMethod method = fullHttpRequest.method();
+            System.out.println("uri是----->"+fullHttpRequest.uri());
             if(wsUrl.equalsIgnoreCase(fullHttpRequest.uri())){
                 WebSocketServerHandshakerFactory webSocketServerHandshakerFactory =
                         new WebSocketServerHandshakerFactory("",null,false);
@@ -64,11 +68,17 @@ public class TestHandler extends ChannelInboundHandlerAdapter {
             if(connectReq.equals(mid[0])){
                 ChannelUtils.channels.put(mid[1],ctx.channel());
                 System.out.println(mid[1]+"登陆了");
-                ctx.channel().writeAndFlush(new TextWebSocketFrame(mid[1]+"登陆了"));
                 return;
             }else if(chatReq.equals(mid[0])){
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date();
                 Channel channel = ChannelUtils.channels.get(mid[2]);
-                channel.writeAndFlush(new TextWebSocketFrame(mid[3]));
+                if(channel == null){
+                    channel = ChannelUtils.channels.get(mid[1]);
+                    channel.writeAndFlush(new TextWebSocketFrame(mid[2]+"@#"+"[系统提示]该用户不在线--->"+simpleDateFormat.format(date)));
+                    return;
+                }
+                channel.writeAndFlush(new TextWebSocketFrame(mid[1]+"@#"+mid[3]+"--->"+simpleDateFormat.format(date)));
             }
             System.out.println("消息是:"+mid[3]);
         }
