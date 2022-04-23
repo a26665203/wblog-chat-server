@@ -8,7 +8,7 @@
     <artifactId>wblog-chat-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <spring.version>4.3.14.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
         <mybatics.version>3.4.6</mybatics.version>
         <log4j.version>1.2.17</log4j.version>
         <fastjson.version>1.2.58</fastjson.version>
