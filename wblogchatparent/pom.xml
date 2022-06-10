@@ -223,7 +223,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
-            <version>2.5.7</version>
+            <version>2.6.12</version>
             <!--            &lt;!&ndash;排除不需要的依赖&ndash;&gt;-->
             <!--            <exclusions>-->
             <!--                &lt;!&ndash;上面已经配置spring依赖，此处排除dubbo默认的spring依赖&ndash;&gt;-->
